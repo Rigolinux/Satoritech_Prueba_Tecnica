@@ -6,16 +6,12 @@
     <v-col cols="12" md="6" sm="12">
     <v-card >
       <v-card-title>
-        <h1>Login</h1>
+        <h1>Register</h1>
       </v-card-title>
       <v-card-text>
-            
-            <v-form>
-              
-              <v-text-field label="Email" type="email"></v-text-field>
-              <v-text-field label="Password" type="password"></v-text-field>
-              <v-btn color="primary">Login</v-btn>
-            </v-form>
+          
+        <AuthForm :isLogin="false" textLabel="Registrar"  @send="registerUser" ></AuthForm>
+             
           </v-card-text>
         </v-card>
       </v-col>
@@ -26,12 +22,26 @@
 </template>
 
 <script lang="ts">
+import { registerReq } from '@/api/auth'
+import AuthForm from '@/components/AuthForm.vue';
+
 export default {
-  name: 'LoginView',
-  data() {
-    return {
-      email: '',
-      password: ''
+  name: 'RegisterView',
+  components: {
+    AuthForm
+  },
+  methods: {
+    async registerUser(data: User){
+      try {
+        const response = await registerReq(data)
+        if(response.data){
+          localStorage.setItem('token', response.data.token)
+          this.$router.push({name: 'login'})
+        }
+        
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
   

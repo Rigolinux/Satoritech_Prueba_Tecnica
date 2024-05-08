@@ -22,7 +22,7 @@ export default {
     name: 'AuthForm',
     props: {
         isLogin: {
-            type: String,
+            type: Boolean,
             required: true
         },
         textLabel: {

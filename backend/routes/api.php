@@ -19,9 +19,11 @@ Route::post('/auth/login', [LoginController::class, 'login']);
 
 // protected routes send 401 if token is invalid
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+    //Route to test if the user is authenticated
+    Route::get('/auth/me', [LoginController::class, 'me']);
+
+
+    
     Route::post('/auth/logout', [LoginController::class, 'logout']);
 
     //All route category

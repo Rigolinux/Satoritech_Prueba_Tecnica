@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import { isUserLoggedIn } from '@/guards/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,7 +24,6 @@ const router = createRouter({
       path: '/category',
       name: 'category',
       component: () => import('../views/Category/IndexCategory.vue'),
-
       redirect: { name: 'category-list' },
       children: [
         {
@@ -44,7 +44,8 @@ const router = createRouter({
           name: 'category-edit',
           component: () => import('../views/Category/EditCategory.vue')
         }
-      ]
+      ],
+      beforeEnter: (to, from, next) => { isUserLoggedIn(to, from, next) }
     },
     
   ]

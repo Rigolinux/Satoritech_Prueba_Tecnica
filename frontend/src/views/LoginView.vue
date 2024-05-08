@@ -10,7 +10,7 @@
       </v-card-title>
       <v-card-text>
             
-            <AuthForm isLogin="true" textLabel="Ingresar"  @send="loginuser" ></AuthForm>
+            <AuthForm :isLogin="true" textLabel="Ingresar"  @send="loginuser" ></AuthForm>
           </v-card-text>
         </v-card>
       </v-col>
