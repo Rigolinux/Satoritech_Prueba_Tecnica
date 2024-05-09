@@ -23,6 +23,11 @@ return new class extends Migration
             $table->integer('cualification')->default(0);
             $table->timestamps();
         });
+
+        // add a foreign key with cascade on delete to the categories table
+        Schema::table('products', function (Blueprint $table) {
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
+        });
     }
 
     /**
