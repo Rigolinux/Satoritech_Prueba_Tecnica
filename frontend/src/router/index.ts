@@ -72,6 +72,8 @@ const router = createRouter({
           component: () => import('../views/Product/EditProduct.vue')
         }
       ],
+      beforeEnter: (to, from, next) => { isUserLoggedIn(to, from, next) }
+
     }
     
   ]

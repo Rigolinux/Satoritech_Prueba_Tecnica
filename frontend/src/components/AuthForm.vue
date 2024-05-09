@@ -7,7 +7,7 @@
             <v-text-field class="mt-2"  label="Correo" :rules="emailRules"  required v-model="form.email" type="email"></v-text-field>
             <v-text-field class="mt-2"  label="Contraseña" :rules="passwordRules"  required v-model="form.password" type="password"></v-text-field>
             <template v-if="!isLogin">
-                <v-text-field class="mt-2"  label="telefono" :rules="phoneRules"  required v-model="form.phone" type="number"></v-text-field>
+                <v-text-field class="mt-2" @keyup.enter="send()"   label="telefono" :rules="phoneRules"  required v-model="form.phone" type="number"></v-text-field>
             </template>
            
             <v-btn class="mt-5" color="primary">{{ textLabel }}</v-btn>

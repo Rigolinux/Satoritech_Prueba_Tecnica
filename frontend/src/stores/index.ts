@@ -4,10 +4,14 @@ import { getCategories } from '@/api/category'
 export default createStore({
   state: {
     categories: [],
+    token: localStorage.getItem('token') || null
   },
   mutations: {
     setCategories(state:any , categories: Category[]) {
       state.categories = categories
+    },
+    setToken(state:any, token: string) {
+      state.token = token
     }
   },
   actions: {

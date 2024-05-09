@@ -25,6 +25,7 @@ import AuthForm from '@/components/AuthForm.vue';
 
 import { loginReq } from '@/api/auth'
 
+
 export default {
   name: 'LoginView',
   components: {
@@ -39,6 +40,7 @@ export default {
         const response = await loginReq(data)
        if(response.data){
         localStorage.setItem('token', response.data.token)
+        this.$store.commit('setToken', response.data.token)
           this.$router.push({name: 'category-list'})
         }
         
