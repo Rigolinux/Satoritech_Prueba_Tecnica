@@ -47,6 +47,32 @@ const router = createRouter({
       ],
       beforeEnter: (to, from, next) => { isUserLoggedIn(to, from, next) }
     },
+    {
+      path: '/product',
+      name: 'product',
+      component: () => import('../views/Product/IndexProduct.vue'),
+      redirect: { name: 'product-list' },
+      children: [
+        {
+          //create
+          path: 'create',
+          name: 'product-create',
+          component: () => import('../views/Product/CreateProduct.vue')
+        },
+        {
+          //list all
+          path: 'list',
+          name: 'product-list',
+          component: () => import('../views/Product/ListProduct.vue')
+        },
+        {
+          //edit
+          path: 'edit/:id',
+          name: 'product-edit',
+          component: () => import('../views/Product/EditProduct.vue')
+        }
+      ],
+    }
     
   ]
 })
