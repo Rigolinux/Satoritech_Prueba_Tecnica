@@ -7,7 +7,7 @@
         <div>
           <template v-if="!token">
             <RouterLink class="ml-4" to="/login">login</RouterLink>
-            <RouterLink class="ml-4" to="/login">Regist</RouterLink>
+            <RouterLink class="ml-4" to="/register">Registrase</RouterLink>
           </template>
           <template v-else>
             <RouterLink class="ml-4"  to="/category">Categorias</RouterLink>
