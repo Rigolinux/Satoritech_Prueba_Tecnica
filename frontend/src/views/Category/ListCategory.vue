@@ -27,7 +27,7 @@
                  
                 </v-data-table>
             </CardLayout>
-
+         
     </div>
 </template>
 <script lang="ts">

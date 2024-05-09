@@ -1,7 +1,7 @@
 <template>
     <CardLayout>
 
-        <CategoryForm :key="item" :isUpdate="true" textLabel="Actualizar categoria" textCancel="Regresar a la lista" @cancel="redirecUser()" @send="createCategory"  :category="category"  />
+        <CategoryForm :key="item" :isUpdate="true" textLabel="Actualizar categoria" textCancel="Regresar a la lista" @cancel="redirecUser()" @send="updateCategory"  :category="category"  />
     </CardLayout>
     
 </template>
@@ -39,9 +39,10 @@ export default {
         redirecUser(){
             this.$router.push({name: 'category-list'})
         },
-        async createCategory(data: Category){
+        async updateCategory(data: Category){
             try {
                 const response = await update(data);
+                this.$router.push({name: 'category-list'})
                 console.log(response)
             } catch (error) {
                 console.log(error)

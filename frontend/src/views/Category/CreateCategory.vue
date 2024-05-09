@@ -3,7 +3,7 @@
 
         <CategoryForm :isUpdate="false" textLabel="Crear categoria" textCancel="Regresar a la lista" @cancel="redirecUser()" @send="createCategory" />
     </CardLayout>
-    
+   
 </template>
 
 <script lang="ts">
