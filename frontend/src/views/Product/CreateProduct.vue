@@ -1,21 +1,22 @@
 <template>
     <CardLayout>
 
-        <CategoryForm :isUpdate="false" textLabel="Crear categoria" textCancel="Regresar a la lista" @cancel="redirecUser()" @send="createCategory" />
+        <ProductForm :isUpdate="false" textLabel="Crear producto" textCancel="Regresar a la lista" @cancel="redirecUser()" @send="createCategory" />
+
     </CardLayout>
    
 </template>
 
 <script lang="ts">
 import CardLayout from '@/components/CardLayout.vue';
-import CategoryForm from '@/components/CategoryForm.vue';
-import type { Category } from '@/types/objects';
-import {create } from '@/api/category';
+import ProductForm from '@/components/ProductForm.vue';
+import type { Product } from '@/types/objects';
+import { createProduct } from '@/api/products';
 export default {
-    name: 'CreateCategory',
+    name: 'CreateProduct',
     components: {
         CardLayout,
-        CategoryForm
+        ProductForm
     },
     data():{
 
@@ -26,17 +27,18 @@ export default {
         }
     },
     mounted() {
-      console.log('CategoryCreate mounted')  
+       
     },
     methods: {
         redirecUser(){
-            this.$router.push({name: 'category-list'})
+            this.$router.push({name: 'product-list'})
         },
-        async createCategory(data: Category){
+        async createCategory(data: Product){
             try {
-                const response = await create(data);
+                console.log(data)
+                const response = await createProduct(data);
                 console.log(response);
-                this.$router.push({name: 'category-list'})
+                this.$router.push({name: 'product-list'})
             } catch (error) {
                 console.log(error)
             }

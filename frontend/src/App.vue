@@ -11,6 +11,7 @@
           </template>
           <template v-else>
             <RouterLink class="ml-4"  to="/category">Categorias</RouterLink>
+            <RouterLink class="ml-4"  to="/product">Productos</RouterLink>
           </template>
         </div>
         <v-btn class="mr-4" color="red" @click="logout()">Cerrar Sesion</v-btn>

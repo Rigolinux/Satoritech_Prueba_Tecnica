@@ -9,7 +9,7 @@
               <v-row>
                 <v-col cols="12" md="12" class="flex justify-end">
                   <v-btn color="primary"> 
-                    <RouterLink :to="{name: 'category-create'}">
+                    <RouterLink :to="{name: 'product-create'}">
                       <v-icon>mdi-plus</v-icon> 
                       Crear </RouterLink>
                   </v-btn>
