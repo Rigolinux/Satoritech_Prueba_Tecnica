@@ -8,9 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'sku';
+    public $incrementing = false; 
+
+    protected function setKeysForSaveQuery($query)
+    {
+        $query
+            ->where($this->getKeyName(), '=', $this->getKeyForSaveQuery())
+            ->limit(1);
+
+        return $query;
+    }
 
     protected $fillable = [
-        'SKU',
+        'sku',
         'name',
         'stock',
         'image',

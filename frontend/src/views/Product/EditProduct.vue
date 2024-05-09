@@ -1,60 +1,63 @@
 <template>
     <CardLayout>
 
-        <CategoryForm :key="item" :isUpdate="true" textLabel="Actualizar categoria" textCancel="Regresar a la lista" @cancel="redirecUser()" @send="updateCategory"  :category="category"  />
+        <ProductForm :key="item" :isUpdate="true" textLabel="Actualizar Producto" textCancel="Regresar a la lista" @cancel="redirecUser()" @send="updateProduct"  :product="product"  />
     </CardLayout>
     
 </template>
 
 <script lang="ts">
 import CardLayout from '@/components/CardLayout.vue';
-import CategoryForm from '@/components/CategoryForm.vue';
-import type { Category } from '@/types/objects';
-import {update,getCategory } from '@/api/category';
+import ProductForm from '@/components/ProductForm.vue';
+import type { Product } from '@/types/objects';
+import {updateProduct,getProduct } from '@/api/products';
 
 
 
 export default {
-    name: 'EditCategory',
+    name: 'EditProduct',
     components: {
         CardLayout,
-        CategoryForm
+        ProductForm
     },
     data():{
-        category: Category,
+        product: Product,
         item: number
     } {
         return {
-            category: {
+            product: {
                 name: '',
-                description: ''
+                stock: 0,
+                image: undefined,
+                cualification: 0,
+                image_url: ''
             },
             item: 0
         }
     },
     mounted() {
-      this.getCurrentCategory();
+      this.getCurrentProduct();
     },
     methods: {
         redirecUser(){
-            this.$router.push({name: 'category-list'})
+            this.$router.push({name: 'product-list'})
         },
-        async updateCategory(data: Category){
+        async updateProduct(data: Product){
             try {
-                const response = await update(data);
-                this.$router.push({name: 'category-list'})
+                const response = await updateProduct(data);
+                this.$router.push({name: 'product-list'})
                 console.log(response)
             } catch (error) {
                 console.log(error)
             }
         },
-        async getCurrentCategory(){
+        async getCurrentProduct(){
             try {
-                const id = +this.$route.params.id;
-                const response = await getCategory(id);
+                const id = this.$route.params.id;
+                const response = await getProduct(id.toString());
                 console.log(response)
-                if(response.data.category){
-                    this.category = response.data.category;
+                if(response.data){
+                    this.product = response.data;
                     this.item++;
                 }
             } catch (error) {

@@ -26,7 +26,7 @@ export default {
         }
     },
     mounted() {
-      console.log('CategoryCreate mounted')  
+
     },
     methods: {
         redirecUser(){
@@ -35,7 +35,7 @@ export default {
         async createCategory(data: Category){
             try {
                 const response = await create(data);
-                console.log(response);
+              
                 this.$router.push({name: 'category-list'})
             } catch (error) {
                 console.log(error)

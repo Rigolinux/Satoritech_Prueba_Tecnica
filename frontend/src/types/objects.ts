@@ -6,6 +6,7 @@ export declare interface Category {
 
 export declare interface Product {
     sku?: string;
+    currentSku? : string;
     name: string;
     stock: number;
     image: string | File | null | any;

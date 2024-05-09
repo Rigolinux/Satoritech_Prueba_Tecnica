@@ -35,9 +35,9 @@ export default {
         },
         async createCategory(data: Product){
             try {
-                console.log(data)
+           
                 const response = await createProduct(data);
-                console.log(response);
+            
                 this.$router.push({name: 'product-list'})
             } catch (error) {
                 console.log(error)

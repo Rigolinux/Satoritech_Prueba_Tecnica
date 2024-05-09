@@ -86,6 +86,7 @@ export default {
             image: '',
             image_url: 'https://cdn.vuetifyjs.com/images/parallax/material.jpg',
             category_name: '',
+            currentSku: '',
            
             },
             isValid: false,
@@ -115,6 +116,8 @@ export default {
         if(this.isUpdate){
             if (this.product) {
                 this.form = this.product;
+                this.form.currentSku = this.product.sku;
+
             }
         }
     },

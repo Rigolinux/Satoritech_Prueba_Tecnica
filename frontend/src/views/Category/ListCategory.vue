@@ -70,7 +70,7 @@ export default {
             try {
                 const response = await getCategories();
                 if(response.data.categories){
-                  console.log(response.data.categories)
+               
                     this.items = response.data.categories;
                 
                 }

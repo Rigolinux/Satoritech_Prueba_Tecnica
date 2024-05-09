@@ -60,9 +60,10 @@ class ProductController extends Controller
         return response()->json($productsData, 200);
     }
 
-    public function getOne($id)
+    public function show($id)
     {
-        $product = Product::find($id);
+        $product = Product::where('sku', $id)->first();
+
 
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
@@ -80,60 +81,87 @@ class ProductController extends Controller
 
     //Update a product
 
-    public function update(Request $request, $sku)
+    public function update(Request $request, $id)
     {
-        // Find product by SKU
+            // Find product by SKU
 
-        try{
+            try{
 
-        // show product in the console
+            // the property current_sku is different from the parameter sku
+                //get the sku from the request
+                $sku = $request->currentSku;
+                if (!$sku) {
+                    $sku = $id;
+                }
 
-       
 
-        $request->validate([
-            'sku' => 'required|string|uppercase|unique:products,SKU',
-            'name' => 'required|string',
-            'stock' => 'required|integer|min:0',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'cualification' => 'required|numeric|min:0|max:5',
-            'category_id' => 'required|integer',
-        ]);
 
-        $product = Product::where('sku', $sku)->first();
+
+            $request->validate([
+                'sku' => 'required|string|uppercase|unique:products,SKU',
+                'name' => 'required|string',
+                'stock' => 'required|integer|min:0',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'cualification' => 'required|numeric|min:0|max:5',
+                'category_id' => 'required|integer',
+            ]);
+
+            $product = Product::where('sku', $sku)->first();
+
+            if (!$product) {
+                return response()->json(['message' => 'Product not found'], 404);
+            }
+
+            // Update product information
+            $product->sku = $request->sku;
+            $product->name = $request->name;
+            $product->stock = $request->stock;
+            $product->cualification = $request->cualification; // Corrected the field name
+            $product->category_id = $request->category_id;
+
+            // Handle image upload
+            if ($request->hasFile('image')) {
+                // Delete old image if exists
+                if ($product->image && Storage::exists($product->image)) {
+                    Storage::delete($product->image);
+                }
+                $imagePath = $request->file('image')->store('public/products');
+                $product->image = $imagePath;
+
+            }
+
+
+            // Save the updated product without id
+            $product->save(['sku' => $sku]);
+
+            return response()->json([
+                'message' => 'Product updated successfully',
+                'product' => $product,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+
+    //Delete a product
+
+    public function destroy($id)
+    {
+        $product = Product::where('sku', $id)->first();
 
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
         }
 
-        // Update product information
-        $product->sku = $request->sku;
-        $product->name = $request->name;
-        $product->stock = $request->stock;
-        $product->qualification = $request->qualification; // Corrected the field name
-        $product->category_id = $request->category_id;
-
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($product->image && Storage::exists($product->image)) {
-                Storage::delete($product->image);
-            }
-            $imagePath = $request->file('image')->store('public/products');
-            $product->image = $imagePath;
-
+        // Delete product image if exists
+        if ($product->image && Storage::exists($product->image)) {
+            Storage::delete($product->image);
         }
 
+        $product->delete();
 
-        // Save the updated product
-        $product->save();
-
-        return response()->json([
-            'message' => 'Product updated successfully',
-            'product' => $product,
-        ], 200);
-    } catch (\Exception $e) {
-        return response()->json(['message' => $e->getMessage()], 500);
-    }
+        return response()->json(['message' => 'Product deleted successfully'], 200);
     }
 
 
